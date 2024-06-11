@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\kevin\\OneDrive\\Desktop\\projects\\ReStore_Course\\API\\API.csproj": {}
+    "C:\\Users\\kevin\\OneDrive\\Desktop\\projects\\legendary-octo-journey\\API\\API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\kevin\\OneDrive\\Desktop\\projects\\ReStore_Course\\API\\API.csproj": {
+    "C:\\Users\\kevin\\OneDrive\\Desktop\\projects\\legendary-octo-journey\\API\\API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kevin\\OneDrive\\Desktop\\projects\\ReStore_Course\\API\\API.csproj",
+        "projectUniqueName": "C:\\Users\\kevin\\OneDrive\\Desktop\\projects\\legendary-octo-journey\\API\\API.csproj",
         "projectName": "API",
-        "projectPath": "C:\\Users\\kevin\\OneDrive\\Desktop\\projects\\ReStore_Course\\API\\API.csproj",
+        "projectPath": "C:\\Users\\kevin\\OneDrive\\Desktop\\projects\\legendary-octo-journey\\API\\API.csproj",
         "packagesPath": "C:\\Users\\kevin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kevin\\OneDrive\\Desktop\\projects\\ReStore_Course\\API\\obj\\",
+        "outputPath": "C:\\Users\\kevin\\OneDrive\\Desktop\\projects\\legendary-octo-journey\\API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\kevin\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -45,10 +45,6 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
-            "Microsoft.AspNetCore.OpenApi": {
-              "target": "Package",
-              "version": "[8.0.3, )"
-            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.4.0, )"

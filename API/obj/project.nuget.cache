@@ -1,12 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "dqRt92gWvR6tXhvu0ocB/oYDDXcdpHWielu7hVibP1NA+jMh6BC7iofCLFaR7G/sT3F2bUIpHAxqxZWCSzi7pg==",
+  "dgSpecHash": "JgcPDWlOCFZEiSda8UNXKup65iXzaRCUJbEkP3SumDIN/ztDfZrGmqJ0mex+0JUSNGbWNFg1EyGI9e0adN5LNQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\kevin\\OneDrive\\Desktop\\projects\\ReStore_Course\\API\\API.csproj",
+  "projectFilePath": "C:\\Users\\kevin\\OneDrive\\Desktop\\projects\\legendary-octo-journey\\API\\API.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\kevin\\.nuget\\packages\\microsoft.aspnetcore.openapi\\8.0.3\\microsoft.aspnetcore.openapi.8.0.3.nupkg.sha512",
     "C:\\Users\\kevin\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
-    "C:\\Users\\kevin\\.nuget\\packages\\microsoft.openapi\\1.4.3\\microsoft.openapi.1.4.3.nupkg.sha512",
+    "C:\\Users\\kevin\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
     "C:\\Users\\kevin\\.nuget\\packages\\swashbuckle.aspnetcore\\6.4.0\\swashbuckle.aspnetcore.6.4.0.nupkg.sha512",
     "C:\\Users\\kevin\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.4.0\\swashbuckle.aspnetcore.swagger.6.4.0.nupkg.sha512",
     "C:\\Users\\kevin\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.4.0\\swashbuckle.aspnetcore.swaggergen.6.4.0.nupkg.sha512",
