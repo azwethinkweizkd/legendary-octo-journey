@@ -7,3 +7,5 @@
 *.pdb
 *.manifest
 *.cache
+/API/bin/Debug/net8.0
+/API/obj
