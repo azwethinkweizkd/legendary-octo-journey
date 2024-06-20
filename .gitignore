@@ -7,5 +7,10 @@
 *.pdb
 *.manifest
 *.cache
+*/**/bin/Debug
+*/**/bin/Release
+*/**/obj/Debug
+*/**/obj/Release
+
 /API/bin/Debug/net8.0
 /API/obj
