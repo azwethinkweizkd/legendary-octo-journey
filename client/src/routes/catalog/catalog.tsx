@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { Product } from "../../app/models/types";
-import { ProductList } from "./productList";
+import { ProductList } from "../../components/product/productList";
 
-export interface Props {
+export interface ProductArrProps {
 	products: Product[];
 }
 

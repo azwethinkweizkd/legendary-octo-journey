@@ -25,7 +25,7 @@ export const ProductCard = ({ product }: Props) => {
 				}
 				title={product.name}
 				titleTypographyProps={{
-					sx: { fontWeight: "bold", color: "primary.main" },
+					sx: { fontWeight: "bold", color: "primary.light" },
 				}}
 			/>
 
@@ -33,7 +33,7 @@ export const ProductCard = ({ product }: Props) => {
 				sx={{
 					height: 140,
 					backgroundSize: "contain",
-					bgcolor: "primary.light",
+					bgcolor: "#bfc1c2",
 				}}
 				image={product.pictureId}
 				title={product.name}
