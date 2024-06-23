@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Catalog } from "../../features/catalog/catalog";
+import { Catalog } from "../../routes/catalog/catalog";
 import { Header } from "./header";
 import {
 	Container,
