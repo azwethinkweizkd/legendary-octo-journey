@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
-import axios from "axios";
 import { Product } from "../../app/models/types";
 import {
 	Divider,
@@ -13,6 +11,8 @@ import {
 	TableRow,
 	Typography,
 } from "@mui/material";
+import agent from "../../app/api/agent";
+import { Spinner } from "../../components/loading/spinner";
 
 export const ProductDetails = () => {
 	const { id } = useParams<{ id: string }>();
@@ -20,14 +20,14 @@ export const ProductDetails = () => {
 	const [loading, setLoading] = useState<boolean>(true);
 
 	useEffect(() => {
-		axios
-			.get(`http://localhost:5000/api/products/${id}`)
-			.then((res) => setProduct(res.data))
-			.catch((err) => console.log(err))
-			.finally(() => setLoading(false));
+		id &&
+			agent.Catalog.details(parseInt(id))
+				.then((res) => setProduct(res))
+				.catch((err) => console.log(err.response))
+				.finally(() => setLoading(false));
 	}, [id]);
 
-	if (loading) return <h3 style={{ paddingTop: "64px" }}>Loading...</h3>;
+	if (loading) return <Spinner message="Loading Product..." />;
 	if (!product)
 		return <h3 style={{ paddingTop: "64px" }}>Product not found</h3>;
 
@@ -44,7 +44,7 @@ export const ProductDetails = () => {
 				<Typography variant="h3">{product.name}</Typography>
 				<Divider sx={{ mb: 2 }} />
 				<Typography variant="h4" color="secondary">
-					{(product.price / 100).toFixed(2)}
+					${(product.price / 100).toFixed(2)}
 				</Typography>
 				<TableContainer>
 					<Table>
