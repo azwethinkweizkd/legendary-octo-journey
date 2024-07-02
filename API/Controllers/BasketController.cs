@@ -1,4 +1,5 @@
 ﻿using API.Data;
+using API.DTOs;
 using API.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,22 +10,19 @@ namespace API.Controllers
     {
 
 
-        [HttpGet]
-        public async Task<ActionResult<Basket>> GetBasket()
+        [HttpGet(Name = "GetBasket")]
+        public async Task<ActionResult<BasketDto>> GetBasket()
         {
-            Basket? basket = await RetrieveBaskets();
-
+            var basket = await RetrieveBasket(GetBuyerId());
             if (basket == null) return NotFound();
-
-            return Ok(basket);
+            return BasketDtoMap(basket);
         }
 
         [HttpPost]
-
-        public async Task<ActionResult> AddItemToBasket(int productId, int quatity)
+        public async Task<ActionResult<BasketDto>> AddItemToBasket(int productId, int quantity)
         {
             // get basket || create basket
-            var userBasket = await RetrieveBaskets();
+            var userBasket = await RetrieveBasket(GetBuyerId());
             userBasket ??= CreateBasket();
 
             // get product
@@ -32,34 +30,54 @@ namespace API.Controllers
             if (product == null) return NotFound();
 
             // add item
-            userBasket.AddItem(product, quatity);
+            userBasket.AddItem(product, quantity);
 
             // save changes
             var result = await context.SaveChangesAsync() > 0;
-
-            if (result)  return StatusCode(201);
+            if (result) return CreatedAtRoute("GetBasket", BasketDtoMap(userBasket));
 
             return BadRequest(new ProblemDetails { Title = "Problem saving item to the basket" });
         }
 
-
         [HttpDelete]
-        public async Task<ActionResult> RemoveBasketIem(int productId, int quatity)
+        public async Task<ActionResult> RemoveBasketItem(int productId, int quantity)
         {
             // get basket
-            // remove item or reduce quantity
-            // save changes
+            var userBasket = await RetrieveBasket(GetBuyerId());
 
-            return Ok();
+            // remove item or reduce quantity
+            var item = userBasket?.Items.FirstOrDefault(i => i.ProductId == productId);
+            if (item == null) return NotFound();
+
+            userBasket?.RemoveItem(productId, quantity);
+
+            // save changes
+            var result = await context.SaveChangesAsync() > 0;
+
+            if (result) return Ok();
+
+            return BadRequest(new ProblemDetails { Title = "Problem deleting item from the basket" });
         }
 
-        private async Task<Basket?> RetrieveBaskets()
+        private async Task<Basket?> RetrieveBasket(string buyerId)
         {
+            if (string.IsNullOrEmpty(buyerId))
+            {
+                Response.Cookies.Delete("buyerId");
+                return null;
+            }
+
             return await context.Baskets
                 .Include(i => i.Items)
                 .ThenInclude(p => p.Product)
-                .FirstOrDefaultAsync(x => x.BuyerId == Request.Cookies["buyerId"]);
+                .FirstOrDefaultAsync(basket => basket.BuyerId == buyerId);
         }
+
+        private string GetBuyerId()
+        {
+            return User.Identity?.Name ?? Request.Cookies["buyerId"];
+        }
+
         private Basket CreateBasket()
         {
             var buyerId = Guid.NewGuid().ToString();
@@ -74,6 +92,24 @@ namespace API.Controllers
             return basket;
         }
 
+        private static BasketDto BasketDtoMap(Basket? basket)
+        {
+            return new BasketDto
+            {
+                Id = basket.Id,
+                BuyerId = basket.BuyerId,
+                Items = basket.Items.Select(item => new BasketItemDto
+                {
+                    ProductId = item.ProductId,
+                    Name = item.Product.Name,
+                    Price = item.Product.Price,
+                    PictureId = item.Product.PictureId,
+                    Type = item.Product.Type,
+                    Brand = item.Product.Brand,
+                    Quantity = item.Quantity
+                }).ToList(),
+            };
+        }
     }
 
 
