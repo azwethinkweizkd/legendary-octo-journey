@@ -7,6 +7,7 @@ import { About } from "./about/aboutPage";
 import { Contact } from "./contact/contactPage";
 import { ServerError } from "../app/errors/serverError";
 import { NotFound } from "../app/errors/notFound";
+import { BasketPage } from "./basket/basket";
 
 export const router = createBrowserRouter([
 	{
@@ -32,6 +33,10 @@ export const router = createBrowserRouter([
 			{
 				path: "contact",
 				element: <Contact />,
+			},
+			{
+				path: "basket",
+				element: <BasketPage />,
 			},
 			{
 				path: "server-error",
