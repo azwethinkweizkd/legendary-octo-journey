@@ -1,12 +1,12 @@
 import { Navigate, createBrowserRouter } from "react-router-dom";
-import App from "../app/layout/App";
+import App from "../layout/App";
 import { Home } from "./home/homePage";
 import { Catalog } from "./catalog/catalog";
 import { ProductDetails } from "./product/productPage";
 import { About } from "./about/aboutPage";
 import { Contact } from "./contact/contactPage";
-import { ServerError } from "../app/errors/serverError";
-import { NotFound } from "../app/errors/notFound";
+import { ServerError } from "../errors/serverError";
+import { NotFound } from "../errors/notFound";
 import { BasketPage } from "./basket/basket";
 
 export const router = createBrowserRouter([

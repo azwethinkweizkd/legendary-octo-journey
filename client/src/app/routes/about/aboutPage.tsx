@@ -10,7 +10,7 @@ import {
 	Typography,
 } from "@mui/material";
 import { useState } from "react";
-import agent from "../../app/api/agent";
+import agent from "../../api/agent";
 import { ToastContainer } from "react-toastify";
 
 export const About = () => {

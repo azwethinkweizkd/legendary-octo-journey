@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Product } from "../../app/models/types";
+import { Product } from "../../models/types";
 import {
 	Divider,
 	Grid,
@@ -11,7 +11,7 @@ import {
 	TableRow,
 	Typography,
 } from "@mui/material";
-import agent from "../../app/api/agent";
+import agent from "../../api/agent";
 import { Spinner } from "../../components/loading/spinner";
 
 export const ProductDetails = () => {
