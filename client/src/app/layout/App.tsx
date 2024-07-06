@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Header } from "./header";
 import {
 	Container,
@@ -8,8 +8,12 @@ import {
 } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import { useStoreContext } from "../context/useStoreContext";
+import { getCookie } from "../util/util";
+import agent from "../api/agent";
 
 function App() {
+	const { setBasket } = useStoreContext();
 	const [darkMode, setDarkMode] = useState(false);
 	const paletteType = darkMode ? "dark" : "light";
 
@@ -25,6 +29,15 @@ function App() {
 	const handleThemeChange = () => {
 		setDarkMode(!darkMode);
 	};
+
+	useEffect(() => {
+		const buyerId = getCookie("buyerId");
+		if (buyerId) {
+			agent.Basket.get()
+				.then((basket) => setBasket(basket))
+				.catch((err) => console.log(err));
+		}
+	}, [setBasket]);
 
 	return (
 		<ThemeProvider theme={theme}>

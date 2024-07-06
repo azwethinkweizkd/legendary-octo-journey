@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { Product } from "../../app/models/types";
+import { Product } from "../../models/types";
 import { ProductList } from "../../components/product/productList";
-import agent from "../../app/api/agent";
+import agent from "../../api/agent";
 import { Spinner } from "../../components/loading/spinner";
 
 export interface ProductArrProps {

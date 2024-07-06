@@ -8,11 +8,12 @@ import {
 	CardActions,
 	Button,
 } from "@mui/material";
-import { Product } from "../../app/models/types";
+import { Product } from "../../models/types";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import agent from "../../app/api/agent";
+import agent from "../../api/agent";
 import { LoadingButton } from "@mui/lab";
+import { useStoreContext } from "../../context/useStoreContext";
 
 interface Props {
 	product: Product;
@@ -20,13 +21,16 @@ interface Props {
 
 export const ProductCard = ({ product }: Props) => {
 	const [loading, setLoading] = useState(false);
+	const { setBasket } = useStoreContext();
 
 	function handleAddItem(productId: number, quantity: number = 1) {
 		setLoading(true);
 		agent.Basket.addItem(productId, quantity)
+			.then((basket) => setBasket(basket))
 			.catch((err) => console.log(err))
 			.finally(() => setLoading(false));
 	}
+
 	return (
 		<Card>
 			<CardHeader

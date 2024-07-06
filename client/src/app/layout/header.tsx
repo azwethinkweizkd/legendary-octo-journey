@@ -12,6 +12,7 @@ import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import { Link, NavLink } from "react-router-dom";
 import { ShoppingCart } from "@mui/icons-material";
+import { useStoreContext } from "../context/useStoreContext";
 
 const midLinks = [
 	{
@@ -55,6 +56,8 @@ interface Props {
 	handleThemeChange: () => void;
 }
 export const Header = ({ mode, handleThemeChange }: Props) => {
+	const { basket } = useStoreContext();
+	const itemCount = basket?.items.reduce((sum, item) => sum + item.quantity, 0);
 	return (
 		<AppBar sx={{ mb: 12 }}>
 			<Toolbar
@@ -91,7 +94,7 @@ export const Header = ({ mode, handleThemeChange }: Props) => {
 						edge="start"
 						color="inherit"
 						sx={{ mr: 2 }}>
-						<Badge badgeContent="4" color="secondary">
+						<Badge badgeContent={itemCount} color="secondary">
 							<ShoppingCart />
 						</Badge>
 					</IconButton>

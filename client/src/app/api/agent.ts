@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
-import { router } from "../../routes/routes";
+import { router } from "../routes/routes";
 import { PaginatedResponse } from "../models/pagination";
 
 import "react-toastify/dist/ReactToastify.css";
