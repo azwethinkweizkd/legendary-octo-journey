@@ -8,6 +8,7 @@ import { Contact } from "./contact/contactPage";
 import { ServerError } from "../errors/serverError";
 import { NotFound } from "../errors/notFound";
 import { BasketPage } from "./basket/basket";
+import { CheckoutPage } from "./checkout/checkoutPage";
 
 export const router = createBrowserRouter([
 	{
@@ -37,6 +38,10 @@ export const router = createBrowserRouter([
 			{
 				path: "basket",
 				element: <BasketPage />,
+			},
+			{
+				path: "checkout",
+				element: <CheckoutPage />,
 			},
 			{
 				path: "server-error",

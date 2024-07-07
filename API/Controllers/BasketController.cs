@@ -8,8 +8,6 @@ namespace API.Controllers
 {
     public class BasketController(StoreContext context) : BaseApiController
     {
-
-
         [HttpGet(Name = "GetBasket")]
         public async Task<ActionResult<BasketDto>> GetBasket()
         {
@@ -40,21 +38,20 @@ namespace API.Controllers
         }
 
         [HttpDelete]
-        public async Task<ActionResult> RemoveBasketItem(int productId, int quantity)
+        public async Task<ActionResult<BasketDto>> RemoveBasketItem(int productId, int quantity)
         {
             // get basket
             var userBasket = await RetrieveBasket(GetBuyerId());
 
-            // remove item or reduce quantity
-            var item = userBasket?.Items.FirstOrDefault(i => i.ProductId == productId);
-            if (item == null) return NotFound();
+            if (userBasket == null) return NotFound();
 
-            userBasket?.RemoveItem(productId, quantity);
+            // remove item or reduce quantity
+            userBasket.RemoveItem(productId, quantity);
 
             // save changes
             var result = await context.SaveChangesAsync() > 0;
 
-            if (result) return Ok();
+            if (result) return CreatedAtRoute("GetBasket", BasketDtoMap(userBasket));
 
             return BadRequest(new ProblemDetails { Title = "Problem deleting item from the basket" });
         }
@@ -94,6 +91,16 @@ namespace API.Controllers
 
         private static BasketDto BasketDtoMap(Basket? basket)
         {
+            if (basket == null) return null;
+            decimal taxRate = 0.10m; // Example tax rate of 10%
+            decimal freeDeliveryThreshold = 10000m; // USD equivalent
+            decimal deliveryFee = 500m; // USD equivalent
+            decimal subtotal = basket.BasketSubTotal();
+            decimal tax = basket.CalculateTax(taxRate);
+            decimal calculatedDeliveryFee = basket.DeliveryFee(freeDeliveryThreshold, deliveryFee);
+            decimal total = basket.BasketTotal(taxRate, freeDeliveryThreshold, deliveryFee);
+
+
             return new BasketDto
             {
                 Id = basket.Id,
@@ -108,6 +115,10 @@ namespace API.Controllers
                     Brand = item.Product.Brand,
                     Quantity = item.Quantity
                 }).ToList(),
+                DeliveryFee = (int)calculatedDeliveryFee,
+                Subtotal = (int)subtotal,
+                Tax = (int)tax,
+                Total = (int)total
             };
         }
     }
