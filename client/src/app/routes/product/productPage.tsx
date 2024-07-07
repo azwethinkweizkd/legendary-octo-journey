@@ -45,7 +45,7 @@ export const ProductDetails = () => {
 			const updatedQuantity = item.quantity - quantity;
 			agent.Basket.removeItem(product?.id, updatedQuantity)
 				.then(() => removeItem(product?.id, updatedQuantity))
-				.catch((err) => console.log(err))
+				.catch((err) => console.error(err))
 				.finally(() => setSubmitting(false));
 		}
 	}
@@ -55,7 +55,7 @@ export const ProductDetails = () => {
 		id &&
 			agent.Catalog.details(parseInt(id))
 				.then((res) => setProduct(res))
-				.catch((err) => console.log(err.response))
+				.catch((err) => console.error(err.response))
 				.finally(() => setLoading(false));
 	}, [id, item]);
 
@@ -69,7 +69,14 @@ export const ProductDetails = () => {
 				<img
 					src={product.pictureId}
 					alt={product.name}
-					style={{ width: "100%" }}
+					style={{
+						width: "100%",
+						backgroundColor: "whitesmoke",
+						borderRadius: "25%",
+						display: "block",
+						marginLeft: "auto",
+						marginRight: "auto",
+					}}
 				/>
 			</Grid>
 			<Grid item xs={6}>
@@ -100,9 +107,10 @@ export const ProductDetails = () => {
 						</TableBody>
 					</Table>
 				</TableContainer>
-				<Grid container spacing={2}>
+				<Grid container spacing={2} marginY={2}>
 					<Grid item xs={6}>
 						<TextField
+							color="secondary"
 							onChange={handleInputChange}
 							variant="outlined"
 							type="number"

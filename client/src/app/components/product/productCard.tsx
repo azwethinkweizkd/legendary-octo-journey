@@ -28,7 +28,7 @@ export const ProductCard = ({ product }: Props) => {
 		setLoading(true);
 		agent.Basket.addItem(productId, quantity)
 			.then((basket) => setBasket(basket))
-			.catch((err) => console.log(err))
+			.catch((err) => console.error(err))
 			.finally(() => setLoading(false));
 	}
 

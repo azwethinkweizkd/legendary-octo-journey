@@ -4,7 +4,7 @@ import { Home } from "./home/homePage";
 import { Catalog } from "./catalog/catalog";
 import { ProductDetails } from "./product/productPage";
 import { About } from "./about/aboutPage";
-import { Contact } from "./contact/contactPage";
+import { ContactPage } from "./contact/contactPage";
 import { ServerError } from "../errors/serverError";
 import { NotFound } from "../errors/notFound";
 import { BasketPage } from "./basket/basket";
@@ -33,7 +33,7 @@ export const router = createBrowserRouter([
 			},
 			{
 				path: "contact",
-				element: <Contact />,
+				element: <ContactPage />,
 			},
 			{
 				path: "basket",

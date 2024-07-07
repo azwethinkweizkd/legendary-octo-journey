@@ -27,8 +27,6 @@ export const BasketPage = () => {
 		name: "",
 	});
 
-	console.log(basket);
-
 	function handleAddItem(productId: number, name: string) {
 		setStatus({ loading: true, name });
 		agent.Basket.addItem(productId)
