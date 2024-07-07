@@ -13,6 +13,10 @@ export interface Basket {
 	id: number;
 	buyerId: string;
 	items: Item[];
+	deliveryFee: number;
+	subtotal: number;
+	tax: number;
+	total: number;
 }
 
 export interface BasketItem {
