@@ -14,7 +14,7 @@ export const Catalog = () => {
 	useEffect(() => {
 		agent.Catalog.list()
 			.then((products) => setProducts(products))
-			.catch((err) => console.log(err))
+			.catch((err) => console.error(err))
 			.finally(() => setLoading(false));
 	}, []);
 

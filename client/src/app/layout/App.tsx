@@ -35,7 +35,7 @@ function App() {
 		if (buyerId) {
 			agent.Basket.get()
 				.then((basket) => setBasket(basket))
-				.catch((err) => console.log(err));
+				.catch((err) => console.error(err));
 		}
 	}, [setBasket]);
 

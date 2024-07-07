@@ -30,21 +30,27 @@ export const About = () => {
 			<ButtonGroup fullWidth>
 				<Button
 					onClick={() =>
-						agent.TestErrors.get500Error().catch((error) => console.log(error))
+						agent.TestErrors.get500Error().catch((error) =>
+							console.error(error)
+						)
 					}
 					variant={"contained"}>
 					Test 500 error
 				</Button>
 				<Button
 					onClick={() =>
-						agent.TestErrors.get404Error().catch((error) => console.log(error))
+						agent.TestErrors.get404Error().catch((error) =>
+							console.error(error)
+						)
 					}
 					variant={"contained"}>
 					Test 404 error
 				</Button>
 				<Button
 					onClick={() =>
-						agent.TestErrors.get400Error().catch((error) => console.log(error))
+						agent.TestErrors.get400Error().catch((error) =>
+							console.error(error)
+						)
 					}
 					variant={"contained"}>
 					Test 400 error
@@ -54,7 +60,9 @@ export const About = () => {
 				</Button>
 				<Button
 					onClick={() =>
-						agent.TestErrors.get401Error().catch((error) => console.log(error))
+						agent.TestErrors.get401Error().catch((error) =>
+							console.error(error)
+						)
 					}
 					variant={"contained"}>
 					Test 401 error
