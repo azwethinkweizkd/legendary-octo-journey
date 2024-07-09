@@ -1,24 +1,24 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Product } from "../../models/types";
 import { ProductList } from "../../components/product/productList";
-import agent from "../../api/agent";
+
 import { Spinner } from "../../components/loading/spinner";
+import { useAppDispatch, useAppSelector } from "../../store/configureStore";
+import { fetchProductsAsync, productSelectors } from "./catalogSlice";
 
 export interface ProductArrProps {
 	products: Product[];
 }
 
 export const Catalog = () => {
-	const [products, setProducts] = useState<Product[]>([]);
-	const [loading, setLoading] = useState(true);
+	const products = useAppSelector(productSelectors.selectAll);
+	const { productsLoaded, status } = useAppSelector((state) => state.catalog);
+	const dispatch = useAppDispatch();
 	useEffect(() => {
-		agent.Catalog.list()
-			.then((products) => setProducts(products))
-			.catch((err) => console.error(err))
-			.finally(() => setLoading(false));
-	}, []);
+		if (!productsLoaded) dispatch(fetchProductsAsync());
+	}, [dispatch, productsLoaded]);
 
-	if (loading) return <Spinner message="Loading products..." />;
+	if (status === "pending") return <Spinner message="Loading products..." />;
 
 	return <ProductList products={products} />;
 };

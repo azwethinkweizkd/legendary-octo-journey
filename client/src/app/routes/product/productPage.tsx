@@ -1,6 +1,5 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Product } from "../../models/types";
 import {
 	Divider,
 	Grid,
@@ -12,19 +11,26 @@ import {
 	TextField,
 	Typography,
 } from "@mui/material";
-import agent from "../../api/agent";
 import { Spinner } from "../../components/loading/spinner";
 import { currencyFormat } from "../../util/util";
-import { useStoreContext } from "../../context/useStoreContext";
 import { LoadingButton } from "@mui/lab";
+import { useAppDispatch, useAppSelector } from "../../store/configureStore";
+import {
+	addBasketItemAsync,
+	removeBasketItemAsync,
+} from "../basket/basketSlice";
+import { fetchProductAsync, productSelectors } from "../catalog/catalogSlice";
+import { NotFound } from "../../errors/notFound";
 
 export const ProductDetails = () => {
-	const { basket, setBasket, removeItem } = useStoreContext();
 	const { id } = useParams<{ id: string }>();
-	const [product, setProduct] = useState<Product | null>(null);
-	const [loading, setLoading] = useState<boolean>(true);
+	const { basket, status } = useAppSelector((state) => state.basket);
+	const { status: productStatus } = useAppSelector((state) => state.catalog);
+	const dispatch = useAppDispatch();
+	const product = useAppSelector((state) =>
+		productSelectors.selectById(state, parseInt(id!))
+	);
 	const [quantity, setQuantity] = useState(0);
-	const [submitting, setSubmitting] = useState(false);
 	const item = basket?.items.find((i) => i.productId === product?.id);
 
 	function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
@@ -34,34 +40,31 @@ export const ProductDetails = () => {
 
 	function handleUpdateCart() {
 		if (!product) return;
-		setSubmitting(true);
-		if (!item || quantity > item.quantity) {
+
+		if (!item || quantity > item?.quantity) {
 			const updatedQuantity = item ? quantity - item.quantity : quantity;
-			agent.Basket.addItem(product?.id, updatedQuantity)
-				.then((basket) => setBasket(basket))
-				.catch((err) => console.error(err))
-				.finally(() => setSubmitting(false));
+			dispatch(
+				addBasketItemAsync({ productId: product.id, quantity: updatedQuantity })
+			);
 		} else {
 			const updatedQuantity = item.quantity - quantity;
-			agent.Basket.removeItem(product?.id, updatedQuantity)
-				.then(() => removeItem(product?.id, updatedQuantity))
-				.catch((err) => console.error(err))
-				.finally(() => setSubmitting(false));
+			dispatch(
+				removeBasketItemAsync({
+					productId: product.id,
+					quantity: updatedQuantity,
+				})
+			);
 		}
 	}
 
 	useEffect(() => {
 		if (item) setQuantity(item.quantity);
-		id &&
-			agent.Catalog.details(parseInt(id))
-				.then((res) => setProduct(res))
-				.catch((err) => console.error(err.response))
-				.finally(() => setLoading(false));
-	}, [id, item]);
+		if (!product && id) dispatch(fetchProductAsync(parseInt(id)));
+	}, [id, item, product, dispatch]);
 
-	if (loading) return <Spinner message="Loading Product..." />;
-	if (!product)
-		return <h3 style={{ paddingTop: "64px" }}>Product not found</h3>;
+	if (productStatus === "pending")
+		return <Spinner message="Loading Product..." />;
+	if (!product) return <NotFound />;
 
 	return (
 		<Grid container spacing={6} paddingTop={16}>
@@ -124,7 +127,7 @@ export const ProductDetails = () => {
 							disabled={
 								item?.quantity === quantity || (quantity === 0 && !item)
 							}
-							loading={submitting}
+							loading={status === "pending"}
 							onClick={handleUpdateCart}
 							sx={{ height: "55px" }}
 							color="primary"

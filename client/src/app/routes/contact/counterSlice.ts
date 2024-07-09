@@ -6,8 +6,8 @@ interface CounterState {
 }
 
 const initialState: CounterState = {
-	title: "Redux with redux toolkit example",
 	data: 42,
+	title: "Redux with redux toolkit example",
 };
 
 export const counterSlice = createSlice({
