@@ -8,12 +8,13 @@ import {
 } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import { useStoreContext } from "../context/useStoreContext";
 import { getCookie } from "../util/util";
 import agent from "../api/agent";
+import { useAppDispatch } from "../store/configureStore";
+import { setBasket } from "../routes/basket/basketSlice";
 
 function App() {
-	const { setBasket } = useStoreContext();
+	const dispatch = useAppDispatch();
 	const [darkMode, setDarkMode] = useState(false);
 	const paletteType = darkMode ? "dark" : "light";
 
@@ -34,10 +35,10 @@ function App() {
 		const buyerId = getCookie("buyerId");
 		if (buyerId) {
 			agent.Basket.get()
-				.then((basket) => setBasket(basket))
+				.then((basket) => dispatch(setBasket(basket)))
 				.catch((err) => console.error(err));
 		}
-	}, [setBasket]);
+	}, [dispatch]);
 
 	return (
 		<ThemeProvider theme={theme}>

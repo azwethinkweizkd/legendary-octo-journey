@@ -11,6 +11,8 @@
 */**/bin/Release
 */**/obj/Debug
 */**/obj/Release
+*/**/store.db
 
 /API/bin/Debug/net8.0
 /API/obj
+/API/store.db

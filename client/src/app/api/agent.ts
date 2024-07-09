@@ -5,8 +5,6 @@ import { PaginatedResponse } from "../models/pagination";
 
 import "react-toastify/dist/ReactToastify.css";
 
-const sleep = () => new Promise((resolve) => setTimeout(resolve, 500));
-
 axios.defaults.baseURL = "http://localhost:5000/api/";
 axios.defaults.withCredentials = true;
 
@@ -14,7 +12,6 @@ const responseBody = (res: AxiosResponse) => res.data;
 
 axios.interceptors.response.use(
 	async (res) => {
-		if (import.meta.env.DEV) await sleep();
 		const pagination = res.headers["pagination"];
 		if (pagination) {
 			res.data = new PaginatedResponse(res.data, JSON.parse(pagination));
