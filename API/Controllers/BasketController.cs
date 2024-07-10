@@ -93,12 +93,10 @@ namespace API.Controllers
         {
             if (basket == null) return null;
             decimal taxRate = 0.10m; // Example tax rate of 10%
-            decimal freeDeliveryThreshold = 10000m; // USD equivalent
-            decimal deliveryFee = 500m; // USD equivalent
             decimal subtotal = basket.BasketSubTotal();
             decimal tax = basket.CalculateTax(taxRate);
-            decimal calculatedDeliveryFee = basket.DeliveryFee(freeDeliveryThreshold, deliveryFee);
-            decimal total = basket.BasketTotal(taxRate, freeDeliveryThreshold, deliveryFee);
+            decimal calculatedDeliveryFee = basket.DeliveryFee();
+            decimal total = basket.BasketTotal(taxRate);
 
 
             return new BasketDto
