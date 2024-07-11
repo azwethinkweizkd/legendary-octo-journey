@@ -21,7 +21,7 @@ export default function AppPagination({ metaData, onPageChange }: Props) {
 			display="flex"
 			justifyContent="space-between"
 			alignItems="center"
-			sx={{ marginBottom: 3 }}>
+			>
 			<Typography variant="body1">
 				Displaying {(currentPage - 1) * pageSize + 1}-
 				{currentPage * pageSize > totalCount!

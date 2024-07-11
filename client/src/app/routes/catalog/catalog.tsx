@@ -7,6 +7,7 @@ import {
 	fetchFilters,
 	fetchProductsAsync,
 	productSelectors,
+	setPageNumber,
 	setProductParams,
 } from "./catalogSlice";
 import { Grid, Paper } from "@mui/material";
@@ -28,7 +29,6 @@ export const Catalog = () => {
 	const products = useAppSelector(productSelectors.selectAll);
 	const {
 		productsLoaded,
-		status,
 		filtersLoaded,
 		brands,
 		types,
@@ -45,11 +45,10 @@ export const Catalog = () => {
 		if (!filtersLoaded) dispatch(fetchFilters());
 	}, [dispatch, filtersLoaded]);
 
-	if (status === "pending" || !metaData)
-		return <Spinner message="Loading products..." />;
+	if (!filtersLoaded) return <Spinner message="Loading products..." />;
 
 	return (
-		<Grid container spacing={4} marginTop={6}>
+		<Grid container columnSpacing={4} marginTop={11}>
 			<Grid item xs={3}>
 				<Paper sx={{ mb: 2 }}>
 					<ProductSearch />
@@ -87,13 +86,15 @@ export const Catalog = () => {
 				<ProductList products={products} />
 			</Grid>
 			<Grid item xs={3}></Grid>
-			<Grid item xs={9}>
-				<AppPagination
-					metaData={metaData}
-					onPageChange={(page: number) =>
-						dispatch(setProductParams({ pageNumber: page }))
-					}
-				/>
+			<Grid item xs={9} sx={{ mb: 2 }}>
+				{metaData && (
+					<AppPagination
+						metaData={metaData}
+						onPageChange={(page: number) =>
+							dispatch(setPageNumber({ pageNumber: page }))
+						}
+					/>
+				)}
 			</Grid>
 		</Grid>
 	);
