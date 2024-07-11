@@ -4,9 +4,9 @@ import { ProductCard } from "./productCard";
 
 export const ProductList = ({ products }: ProductArrProps) => {
 	return (
-		<Grid container spacing={4} marginTop={6} marginBottom={4}>
+		<Grid container spacing={4} marginBottom={4}>
 			{products.map((product) => (
-				<Grid item xs={3} key={product.id}>
+				<Grid item xs={4} key={product.id}>
 					<ProductCard key={product.id} product={product} />
 				</Grid>
 			))}
