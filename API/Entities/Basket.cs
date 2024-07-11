@@ -33,12 +33,10 @@
             return Items.Sum(item => item.Product.Price *  item.Quantity);
         }
 
-        public decimal DeliveryFee(decimal freeDeliveryThreshold = 10000m, decimal deliveryFee = 500m)
+        public decimal DeliveryFee()
         {
-            Console.WriteLine($"{freeDeliveryThreshold} {deliveryFee}");
             decimal subtotal = BasketSubTotal();
-            Console.WriteLine($"Subtotal: {subtotal}");
-            return subtotal >= freeDeliveryThreshold ? 0 : deliveryFee;
+            return subtotal >= 10000 ? 0 : 500;
         }
 
         public decimal CalculateTax(decimal taxRate)
@@ -46,11 +44,9 @@
             return (BasketSubTotal() * taxRate);
         }
 
-        public decimal BasketTotal(decimal taxRate, decimal freeDeliveryThreshold = 100m, decimal deliveryFee = 5m)
+        public decimal BasketTotal(decimal taxRate)
         {
-            decimal fee = DeliveryFee(freeDeliveryThreshold, deliveryFee);
-            Console.WriteLine($"Delivery fee: {fee}");
-            return BasketSubTotal() + CalculateTax(taxRate) + DeliveryFee(freeDeliveryThreshold, deliveryFee);
+            return BasketSubTotal() + CalculateTax(taxRate) + DeliveryFee();
         }
     }
 }

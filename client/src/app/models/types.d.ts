@@ -9,6 +9,15 @@ export interface Product {
 	qntyInStock: number;
 }
 
+export interface ProductParams {
+	orderBy: string;
+	searchTerm?: string;
+	types: string[];
+	brands: string[];
+	pageNumber: number;
+	pageSize: number;
+}
+
 export interface Basket {
 	id: number;
 	buyerId: string;
